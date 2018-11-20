@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<style type="text/css">
+canvas{
+	display: block;
+	margin:auto ; 
+	border:1px solid #000000;
+}
+</style>
+
+<script type="text/javascript">
+
+	var esquerda = new Image();
+	var direita = new Image();
+	var trump = new Image();
+
+	var esq = {
+		x: -10,
+		y:240 -50
+	}
+
+	var dir = {
+		x:510 ,
+		y:240 -50
+	}
+
+	var tru = {
+		x:300 -50,
+		y:240 -50,
+		vx: Math.random() > 0.5 ? -1.5 : 1.5,
+		vy: Math.random() > 0.5 ? -1.5 : 1.5
+
+	}
+
+	function init(){
+		esquerda.src = 'HANDesquerda.png';
+		direita.src = 'HANDdireita.png';
+		trump.src = 'trump.png';
+		setInterval(draw,1/60*1000);
+	}
+
+	init();
+	setInterval(update,1/60*1000);
+
+	function draw() {
+		var ctx = document.getElementById('canvas').getContext('2d');
+
+		ctx.clearRect(0,0,600,480);
+
+		ctx.drawImage(esquerda, esq.x,esq.y,100,100);
+		ctx.drawImage(direita, dir.x,dir.y,100,100);
+		ctx.drawImage(trump,tru.x,tru.y,100,100);
+
+
+	}
+
+	var KeysArrow = {
+		up: false,
+		down: false
+	};
+
+	var KeysWS = {
+		up: false,
+		down: false
+	};
+
+	window.onkeydown = function(e) {
+		var kc = e.keyCode;
+		e.preventDefault();
+
+
+		if      (kc === 40) {
+			KeysArrow.down = true;
+			KeysArrow.up =false;}
+			else if (kc === 38) {
+				KeysArrow.up = true;
+				KeysArrow.down = false; 
+			} 
+
+			if      (kc === 83) {
+				KeysWS.down = true;
+				KeysWS.up =false;}
+				else if (kc === 87) {
+					KeysWS.up = true;
+					KeysWS.down = false; 
+				} 
+			};
+
+
+			window.onkeyup = function(e) {
+				var kc = e.keyCode;
+				e.preventDefault();
+
+				if      (kc === 40) {
+					KeysArrow.down = false;
+				}
+				else if (kc === 38) {
+					KeysArrow.up = false; 
+				} 
+
+
+				if      (kc === 83) {
+					KeysWS.down = false;
+				}
+				else if (kc === 87) {
+					KeysWS.up = false; 
+				} 
+			};
+
+
+			function update(){
+				tru.x += tru.vx;
+				tru.y += tru.vy;
+
+
+				if(tru.y+10 > 400){
+					tru.vy *= -1;
+				}
+
+				if(tru.y < 0){
+					tru.vy *= -1;
+				}
+
+				if(tru.y >= esq.y && tru.y <= esq.y+110 && tru.x >= esq.x && tru.x <= esq.x+80){
+					tru.vy *= -1;
+					tru.vx *= -1;
+				}
+
+
+				if(tru.y >= dir.y && tru.y <= dir.y+110 && tru.x >= dir.x-80 && tru.x <= dir.x){
+					tru.vy *= -1;
+					tru.vx *= -1;
+				}
+
+				if(tru.x < 0){
+					tru.x = 240;
+					tru.vx = Math.random() > 0.5 ? -1.5 : 1.5;
+					pontodir();
+				}
+
+				if(tru.x+10 > 510){
+					tru.x = 240;
+					tru.vx = Math.random() > 0.5 ? -1.5 : 1.5;
+					pontoesq();
+				}
+
+				function pontoesq(){
+					var text = document.getElementById("esquerda").innerHTML;
+					document.getElementById("esquerda").innerHTML = Number(text) + 1;
+				};
+
+				function pontodir(){
+					var text = document.getElementById("direita").innerHTML;
+					document.getElementById("direita").innerHTML = Number(text) + 1;
+				};
+
+				if (KeysArrow.up) {
+					dir.y-=3;
+					if(dir.y < -25){
+						dir.y = -25;
+					}
+				}
+				else if (KeysArrow.down) { 
+					dir.y+=3;
+					if(dir.y > 405){
+						dir.y = 405;
+					}
+				}
+
+				if (KeysWS.up) {
+					esq.y-=3;
+					if(esq.y < -25){
+						esq.y = -25;
+					}
+				}
+				else if (KeysWS.down) { 
+					esq.y+=3;
+					if(esq.y > 405){
+						esq.y = 405;
+					}
+				}
+			}
+
+
+		</script>
+		<body>
+			<canvas id="canvas" width="600" height="480" >
+			</canvas >
+			<h1 >Pontos Direita: <strong id="direita"> 0 </strong></h1>
+			<h1 >Pontos Esquerda: <strong id="esquerda"> 0 </strong></h1>
+		</body>
+		</html>
