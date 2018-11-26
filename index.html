@@ -16,6 +16,7 @@ canvas{
 	var esquerda = new Image();
 	var direita = new Image();
 	var trump = new Image();
+	var audio = new Audio();
 
 	var esq = {
 		x: -10,
@@ -39,6 +40,7 @@ canvas{
 		esquerda.src = 'HANDesquerda.png';
 		direita.src = 'HANDdireita.png';
 		trump.src = 'trump.png';
+		audio.src = 'https://www.soundjay.com/human/fart-01.mp3';
 		setInterval(draw,1/60*1000);
 	}
 
@@ -125,12 +127,14 @@ canvas{
 				}
 
 				if(tru.y >= esq.y && tru.y <= esq.y+110 && tru.x >= esq.x && tru.x <= esq.x+90){
+					audio.play();
 					tru.vy *= -1;
 					tru.vx *= -1;
 				}
 
 
 				if(tru.y >= dir.y && tru.y <= dir.y+110 && tru.x >= dir.x-80 && tru.x <= dir.x){
+					audio.play();
 					tru.vy *= -1;
 					tru.vx *= -1;
 				}
