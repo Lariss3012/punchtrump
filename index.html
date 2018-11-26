@@ -40,7 +40,7 @@ canvas{
 		esquerda.src = 'HANDesquerda.png';
 		direita.src = 'HANDdireita.png';
 		trump.src = 'trump.png';
-		audio.src = 'https://www.soundjay.com/human/fart-01.mp3';
+		audio.src = 'https://www.soundjay.com/human/man-scream-ahh-01.mp3';
 		setInterval(draw,1/60*1000);
 	}
 
@@ -133,7 +133,7 @@ canvas{
 				}
 
 
-				if(tru.y >= dir.y && tru.y <= dir.y+110 && tru.x >= dir.x-80 && tru.x <= dir.x){
+				if(tru.y >= dir.y && tru.y <= dir.y+115 && tru.x >= dir.x-85 && tru.x <= dir.x){
 					audio.play();
 					tru.vy *= -1;
 					tru.vx *= -1;
